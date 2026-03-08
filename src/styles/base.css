@@ -1,0 +1,483 @@
+/**
+ * Base styles: reset, layout, animations, responsive nav.
+ * Theme-specific variables and components live in themes.css.
+ */
+
+/* -----------------------------------------------------------------------------
+   Reset & root
+   ----------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Focus visible for keyboard users (accessibility) */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* -----------------------------------------------------------------------------
+   App shell
+   ----------------------------------------------------------------------------- */
+.app-root {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+[data-theme] {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Skip link: first focusable element for screen readers / keyboard */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0.5rem;
+  z-index: 10000;
+  padding: 0.75rem 1rem;
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* -----------------------------------------------------------------------------
+   Scroll reveal (IntersectionObserver adds .visible)
+   ----------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -----------------------------------------------------------------------------
+   Keyframe animations (used by theme-specific selectors)
+   ----------------------------------------------------------------------------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glitch {
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(2px, -2px);
+  }
+  60% {
+    transform: translate(-2px, -2px);
+  }
+  80% {
+    transform: translate(2px, 2px);
+  }
+}
+
+@keyframes typingCursor {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Navigation: sticky, responsive
+   ----------------------------------------------------------------------------- */
+.nav-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+@media (max-width: 767px) {
+  .nav-inner {
+    padding: 0.75rem 1rem;
+  }
+}
+
+.nav-links-desktop {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-links-mobile {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding: 1rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 999;
+}
+
+@media (min-width: 768px) {
+  .nav-links-mobile {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    padding: 1rem 1.5rem;
+  }
+}
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 1.25rem;
+  line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Logo: prevent shrinking too much on mobile */
+.logo {
+  font-size: clamp(0.875rem, 2.5vw, 1.25rem) !important;
+}
+
+@media (max-width: 767px) {
+  .nav-links-desktop {
+    display: none !important;
+  }
+
+  .nav-links-mobile {
+    display: flex !important;
+  }
+
+  .hamburger {
+    display: block !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .nav-links-mobile {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: none !important;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Main content area
+   ----------------------------------------------------------------------------- */
+.main-content {
+  min-height: 60vh;
+}
+
+/* Readability: legible base size and line-height */
+.main-content {
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.main-content .card p,
+.main-content .persona-card p,
+.main-content .persona-fit-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Footer */
+.site-footer {
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--border);
+  margin-top: 3rem;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer p + p {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  .site-footer {
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+   Section layout utilities (shared across pages)
+   ----------------------------------------------------------------------------- */
+.section {
+  padding: 3rem 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 2rem 1rem;
+  }
+}
+
+.section--alt {
+  background: var(--bg-alt, var(--bg-card));
+}
+
+/* 72% stat section: sit close to hero with less top padding */
+.section--stat {
+  padding-top: 2rem;
+}
+
+@media (max-width: 767px) {
+  .section--stat {
+    padding-top: 1.5rem;
+  }
+}
+
+.section-divider {
+  /* Height/color overridden per theme in themes.css */
+  margin: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+}
+
+.container--narrow {
+  max-width: 720px;
+}
+
+.container--text {
+  max-width: 700px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .card-grid {
+    gap: 1rem;
+  }
+}
+
+.card-grid--services {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1.25rem;
+}
+
+@media (max-width: 767px) {
+  .card-grid--services {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+/* Buttons and CTAs: touch-friendly and readable */
+.btn-primary {
+  min-height: 44px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.95;
+}
+
+/* Contact Realis / link-as-button (Services page) */
+.link-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--accent);
+  margin-top: 0.25rem;
+}
+
+.link-cta:hover {
+  text-decoration: underline;
+}
+
+/* Contact page: spacing for link blocks */
+.contact-links-block {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.contact-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+/* Contact page: center all content */
+.page-contact .section:first-of-type {
+  text-align: center;
+}
+
+.page-contact .contact-links-block {
+  align-items: center;
+  text-align: center;
+}
+
+.page-contact .contact-social {
+  justify-content: center;
+}
+
+.page-contact .contact-form-section {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.page-contact .contact-form-section form {
+  text-align: left;
+  max-width: 100%;
+}
+
+.page-contact .contact-form-section .btn-primary {
+  align-self: center;
+}
+
+/* Persona section: engaging cards with tags */
+.section-personas .persona-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.persona-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.persona-card:hover {
+  transform: translateY(-2px);
+}
+
+.persona-tag {
+  border-radius: 0;
+}
+
+[data-theme='executive'] .persona-tag {
+  background: var(--bg-alt);
+  border-color: var(--accent);
+}
+
+/* Services page: Persona → Service fit section */
+.section-persona-fit {
+  background: var(--bg-alt, var(--bg-card));
+}
+
+.persona-fit-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 1.25rem;
+}
+
+.persona-fit-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.persona-fit-card:hover {
+  transform: translateY(-2px);
+}
+
+.persona-fit-aws {
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+}

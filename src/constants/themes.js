@@ -24,4 +24,4 @@ export const FONT_LINKS = {
     'https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;1,9..40,400&display=swap',
 };
 
-export const DEFAULT_THEME = THEME_IDS.DARK;
+export const DEFAULT_THEME = THEME_IDS.EXECUTIVE;

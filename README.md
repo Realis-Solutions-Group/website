@@ -2,6 +2,8 @@
 
 Production-grade marketing site for Realis Solutions Group: AI security, product safety, and emerging risk advisory. Four pages, three swappable visual themes, **URL-based routing** (`/`, `/services`, `/about`, `/contact`).
 
+**License:** [MIT](LICENSE)
+
 ## Tech stack
 
 - **React 18** (hooks)
